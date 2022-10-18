@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<p>Ласкова просимо в <em>Світ книг</em>. Це дуже простий сайт що написано на django.</p>
+    <h2>Динамічний контент</h2>
+    <p>База даних сайту Світ книг має наступну кількість записів:</p>
+    <ul>
+    <li><strong>Кількість книг:</strong>{{ num_books }}</li>
+        <li><strong>Кількість екземплярів книг:</strong>{{ num_instances }}</li>
+        <li><strong>Кількість екземплярів книг в заказі:</strong>{{ num_instances_available }}</li>
+        <li><strong>Кількість авторів книг:</strong>{{ num_authors }}</li>
+    </ul>
+{% endblock %}
