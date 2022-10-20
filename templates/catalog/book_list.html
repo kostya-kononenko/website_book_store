@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Перелік книг в базі даних</h1>
+    {% if book_list %}
+    <ul>
+    {% for book in book_list %}
+    <li>
+            <a href="{% url 'books-detail' book.pk%}">
+            {{ book.title }}</a>
+            {{ book.genre }}
+            <a href="{% url 'book_update' book.pk %}">Змінити</a>
+            <a href="{% url 'book_delete' book.pk %}">Видалити</a>
+    </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>В базі відсутні книги</p>
+    {% endif %}
+{% endblock %}
+
+

@@ -14,7 +14,7 @@
 {% block head %}
     <img src="{% static 'images/logotip.jpg' %}"
          style="width: 100px; height: 100px;" align="absmiddle">
-    <font size=7, color="blue">Сайт світ книг</font>
+    <font size=7, color="blue">Cвіт книг</font>
 {% endblock %}
 </head>
 <body>
@@ -24,18 +24,46 @@
                 {% block sidebar %}
                 <ul class="sidebar-nav">
                 <li><a href="{% url 'index' %}">Головна сторінка</a> </li>
-                <li><a href="">Всі книги</a></li>
-                    <li><a href="">Всі автори</a></li>
+                <li><a href="{% url 'books' %}">Всі книги</a></li>
+                    <li><a href="{% url 'authors' %}">Всі автори</a></li>
+                    <li><a href="{% url 'my-borrowed' %}">Мої закази</a></li>
+                    <li><a href="{% url 'authors_add' %}">Редагування авторів</a></li>
+                    <li><a href="{% url 'book_create' %}">Додати книгу</a></li>
+
+                {% if user.is_authenticated %}
+                <li>Користувач: {{ user.get_username }}</li>
+                <li><a href="{% url 'logout' %}?next={{ request.path }}">Вихід</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}?next={{ request.path }}">Вхід</a> </li>
+                {% endif %}
                 </ul>
                 {% endblock %}
                 </div>
         <div class="col-sm-10">
             {% block content %}{% endblock %}
-        {% block footer %}
-        {% block copyright %}
-            <p>Copyright ТОВ "Світ книг", 2022. Всі права захищено</p>
+            {% block pagination %}
+            {% if is_paginated  %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{page_obj.previous_page_number }}">Попередня</a>
+                       {% endif %}
+                        <span class="page-current">
+                            Сторінка {{ page_obj.number }} з
+                            {{ page_obj.paginator.num_pages }}.
+                        </span>
+                        {% if page_obj.has_next %}
+                            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Наступна</a>
+                        {% endif %}
+            </span>
+        </div>
+        {% endif %}
         {% endblock %}
-        {% endblock %}
+            {% block footer %}
+                {% block copyright %}
+                    <p>Copyright ТОВ "Світ книг", 2022. Всі права захищено</p>
+                {% endblock %}
+            {% endblock %}
         </div>
         </div>
     </div>
